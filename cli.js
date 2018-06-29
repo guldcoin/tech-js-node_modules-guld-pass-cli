@@ -3,7 +3,6 @@ const program = require('commander')
 const pkg = require('./package.json')
 const VERSION = pkg.version
 const NAME = Object.keys(pkg.bin)[0]
-const config = require('guld-config')
 
 const COMMANDS = {
   'config': ['Manage git config files the guld way.', {isDefault: true}],

@@ -20,8 +20,7 @@
   "author": "isysd",
   "license": "MIT",
   "dependencies": {
-    "commander": "^2.16.0",
-    "guld-config": "^1.1.0"
+    "commander": "^2.16.0"
   },
   "devDependencies": {
     "chai": "^4.1.2",
