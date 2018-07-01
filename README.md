@@ -1,36 +1,39 @@
-# guld-cli
+# guld-pass-cli
 
-Universal wrapper for guld commands. Discovers `guld-*` commands and allows them to be called as `guld *` from the main script.
+Encrypted password management comaptible with Standard Unix Password Store.
 
 ### Install
 
 ```
-npm i -g guld-cli
+npm i -g guld-pass-cli
 ```
 
 ### Usage
 
-
 ##### CLI
 
 ```
-  Usage: guld [options] [command]
+  Usage: guld-pass [options] [command]
 
-  Guld standardized Command Line Interface (CLI) for git.
+  Encrypted password management comaptible with Standard Unix Password Store.
 
   Options:
 
-    -V, --version      output the version number
-    -u, --user         The user name to set up.
-    -r, --recipient    The recipient of a message or transaction.
-    -f, --fingerprint  The PGP fingerprint to sign with.
-    -h, --help         output usage information
+    -V, --version                                 output the version number
+    -u --user <name>                              The user name to run as.
+    -h, --help                                    output usage information
 
   Commands:
 
-    config             Manage git config files the guld way.
-    env                Guld environment detection module.
-    git                Guld standardized Command Line Interface (CLI) for git.
-    help [cmd]         display help for [cmd]
+    init [options] <gpg-id...>                    Initialize new password storage and use gpg-id for encryption. Selectively reencrypt existing passwords using new gpg-id.
+    ls [subfolder]                                List passwords.
+    find <pass-names...>                          List passwords that match pass-names.
+    show [options] <pass-name>                    Show existing password and optionally put it on the clipboard.
+    grep <search-string>                          Search for password files containing search-string when decrypted.
+    insert [options] <pass-name>                  Insert new password. Reads from stdin by default.
+    edit <pass-name>                              Insert a new password or edit an existing password using editor.
+    generate [options] <pass-name> [pass-length]  Generate a new password of pass-length (or 25 if unspecified).
+    rm [options] <pass-name>                      Remove existing password or directory, optionally forcefully.
+    mv [options] <old-path> <new-path>            Renames or moves old-path to new-path, optionally forcefully, selectively reencrypting.
+    cp [options] <old-path> <new-path>            Copies old-path to new-path, optionally forcefully, selectively reencrypting.
 ```
-
