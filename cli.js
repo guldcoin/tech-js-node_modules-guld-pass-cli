@@ -1,14 +1,18 @@
 #!/usr/bin/env node
 const program = require('commander')
 const { spawn } = require('child_process')
-const { scall } = require('keyring-gpg')
 const pkg = require('./package.json')
 const { show, insert, init } = require('guld-pass')
+const { getFS } = require('guld-fs')
 const clipboardy = require('clipboardy')
+const home = require('user-home')
+const path = require('path')
 const VERSION = pkg.version
 const getStdin = require('get-stdin')
 const inquirer = require('inquirer')
+var fs
 
+/* eslint-disable no-console */
 program
   .name('guld-pass')
   .version(VERSION)
@@ -71,13 +75,14 @@ program
   .option('-m --multiline', 'Allow multi-line entries')
   .option('-f --force', 'Do not prompt before overwriting password.')
   .action(async (pname, options) => {
+    fs = fs || await getFS()
     var stdin = await getStdin()
     if (stdin && stdin.length > 0 && pname) {
       if (options.force) {
         await insert(pname, stdin)
       } else {
         try {
-          var stats = await fs.stat(path.join(home, '.password-store', pname))
+          await fs.stat(path.join(home, '.password-store', pname))
           inquirer
             .prompt([
               {
@@ -124,7 +129,7 @@ program
   .option('-f --force', 'Do not prompt before overwriting password.')
   .option('-n --no-symbols', 'Optionally generate password with no symbols.')
   .option('-i --in-place', 'Update password in place, leaving other lines untouched.')
-  .action((pname, plen=25, options={}) => {
+  .action((pname, plen = 25, options = {}) => {
     var args = ['generate', pname, plen]
     spawn('pass', args, {stdio: ['inherit', 'inherit', 'inherit']})
   })
@@ -153,8 +158,9 @@ program
     var args = ['cp', oldp, newp]
     spawn('pass', args, {stdio: ['inherit', 'inherit', 'inherit']})
   })
+/* eslint-enable no-console */
 
-//program
+// program
 //  .command('ls [subfolder]')
 //  .description(`List passwords.`)
 
