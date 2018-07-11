@@ -22,7 +22,7 @@
     "clipboardy": "^1.2.3",
     "commander": "^2.16.0",
     "get-stdin": "^6.0.0",
-    "guld-pass": "^0.5.2",
+    "guld-pass": "^0.5.3",
     "inquirer": "^6.0.0",
     "keyring-gpg": "^0.3.1"
   },
