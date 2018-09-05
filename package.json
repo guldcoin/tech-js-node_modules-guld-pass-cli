@@ -1,6 +1,6 @@
 {
   "name": "guld-pass-cli",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "Encrypted password management comaptible with Standard Unix Password Store.",
   "bin": {
     "guld-pass": "cli.js"
