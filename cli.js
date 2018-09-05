@@ -1,22 +1,22 @@
 #!/usr/bin/env node
 const program = require('commander')
 const { spawn } = require('child_process')
-const pkg = require('./package.json')
 const { show, insert, init } = require('guld-pass')
 const { getFS } = require('guld-fs')
 const clipboardy = require('clipboardy')
 const home = require('user-home')
 const path = require('path')
-const VERSION = pkg.version
 const getStdin = require('get-stdin')
 const inquirer = require('inquirer')
+const runCLI = require('guld-cli-run')
+const thispkg = require(`${__dirname}/package.json`)
 var fs
 
 /* eslint-disable no-console */
 program
-  .name('guld-pass')
-  .version(VERSION)
-  .description('Encrypted password management comaptible with Standard Unix Password Store.')
+  .name(thispkg.name.replace('-cli', ''))
+  .version(thispkg.version)
+  .description(thispkg.description)
   .option('-u --user <name>', 'The user name to run as.', (n) => {
     if (n) process.env.GULDNAME = global.GULDNAME = n
     return true
@@ -164,8 +164,11 @@ program
 //  .command('ls [subfolder]')
 //  .description(`List passwords.`)
 
-program.parse(process.argv)
+runCLI.bind(program)(program.help, () => {
+  program.parse(process.argv)
 
-if (program.args.length === 0) {
-  spawn('pass', ['ls'], {stdio: ['inherit', 'inherit', 'inherit']})
-}
+  if (program.args.length === 0) {
+    spawn('pass', ['ls'], {stdio: ['inherit', 'inherit', 'inherit']})
+  }
+})
+module.exports = program
